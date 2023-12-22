@@ -8,15 +8,15 @@
   ],
   "authors": [
     {
-      "name": "Patrick Lapointe",
+      "name": "lox294",
       "maintainer": true
     }
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/plapointe6/EspMQTTClient.git"
+    "url": "https://github.com/lox294/EspMQTTClient.git"
   },
-  "version": "1.13.3",
+  "version": "1.0",
   "frameworks": "arduino",
   "platforms": ["espressif8266", "espressif32"],
   "dependencies": [
