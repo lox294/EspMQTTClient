@@ -144,8 +144,8 @@ public:
   void enableLastWillMessage(const char* topic, const char* message, const bool retain = false); // Must be set before the first loop() call.
   void enableDrasticResetOnConnectionFailures() {_drasticResetOnConnectionFailures = true;} // Can be usefull in special cases where the ESP board hang and need resetting (#59)
 
-  /// Main loop, to call at each sketch loop()
-  void loop();
+  /// Main loop, to call at each sketch loop(). You can customize the WifiMode. By default the WIFI_STA is enabled.
+  void loop(WiFiMode_t _wifiMode = WIFI_STA);
 
   // MQTT related
   bool setMaxPacketSize(const uint16_t size); // Pubsubclient >= 2.8; override the default value of MQTT_MAX_PACKET_SIZE
@@ -189,14 +189,14 @@ public:
   inline void setWifiReconnectionAttemptDelay(const unsigned int milliseconds) { _wifiReconnectionAttemptDelay = milliseconds; };
 
 private:
-  bool handleWiFi();
+  bool handleWiFi(WiFiMode_t _wifiMode = WIFI_STA);
   bool handleMQTT();
   void onWiFiConnectionEstablished();
   void onWiFiConnectionLost();
   void onMQTTConnectionEstablished();
   void onMQTTConnectionLost();
 
-  void connectToWifi();
+  void connectToWifi(WiFiMode_t _wifiMode = WIFI_STA);
   bool connectToMqttBroker();
   void processDelayedExecutionRequests();
   bool mqttTopicMatch(const String &topic1, const String &topic2);

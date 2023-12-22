@@ -158,10 +158,10 @@ void EspMQTTClient::enableLastWillMessage(const char* topic, const char* message
 
 
 // =============== Main loop / connection state handling =================
-
-void EspMQTTClient::loop()
+// Leave the possibility to select the WiFi mode STA / AP / APSTA. Default Station (STA)
+void EspMQTTClient::loop(WiFiMode_t _wifiMode = WIFI_STA)
 {
-  bool wifiStateChanged = handleWiFi();
+  bool wifiStateChanged = handleWiFi(_wifiMode);
 
   // If there is a change in the wifi connection state, don't handle the mqtt connection state right away.
   // We will wait at least one lopp() call. This prevent the library from doing too much thing in the same loop() call.
@@ -176,7 +176,8 @@ void EspMQTTClient::loop()
   processDelayedExecutionRequests();
 }
 
-bool EspMQTTClient::handleWiFi()
+// Leave the possibility to select the WiFi mode
+bool EspMQTTClient::handleWiFi(WiFiMode_t _wifiMode = WIFI_STA)
 {
   // When it's the first call, reset the wifi radio and schedule the wifi connection
   static bool firstLoopCall = true;
@@ -252,7 +253,7 @@ bool EspMQTTClient::handleWiFi()
   // Then, if we handle the wifi reconnection process and the waiting delay has expired, we connect to wifi
   else if(_handleWiFi && _nextWifiConnectionAttemptMillis > 0 && millis() >= _nextWifiConnectionAttemptMillis)
   {
-    connectToWifi();
+    connectToWifi(_wifiMode); // tansmit the WiFi mode
     _nextWifiConnectionAttemptMillis = 0;
     _connectingToWifi = true;
     _lastWifiConnectionAttemptMillis = millis();
@@ -553,10 +554,10 @@ void EspMQTTClient::executeDelayed(const unsigned long delay, DelayedExecutionCa
 
 // ================== Private functions ====================-
 
-// Initiate a Wifi connection (non-blocking)
-void EspMQTTClient::connectToWifi()
+// Initiate a Wifi connection (non-blocking). Leave the posibility to select the WiFiMode
+void EspMQTTClient::connectToWifi(WiFiMode_t _wifiMode = WIFI_STA)
 {
-  WiFi.mode(WIFI_STA);
+  WiFi.mode(_wifiMode);
   #ifdef ESP32
     WiFi.setHostname(_mqttClientName);
   #else
