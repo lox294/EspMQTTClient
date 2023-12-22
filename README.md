@@ -49,6 +49,7 @@ void loop() {
 
 See `SimpleMQTTClient.ino` for the complete example.
 
+To use the WIFI_APSTA mode, see `ApStaMQTTClient.ino` for an example.
 
 ## Documentation
 
