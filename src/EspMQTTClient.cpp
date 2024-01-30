@@ -159,7 +159,7 @@ void EspMQTTClient::enableLastWillMessage(const char* topic, const char* message
 
 // =============== Main loop / connection state handling =================
 // Leave the possibility to select the WiFi mode STA / AP / APSTA. Default Station (STA)
-void EspMQTTClient::loop(WiFiMode_t _wifiMode = WIFI_STA)
+void EspMQTTClient::loop(WiFiMode_t _wifiMode)
 {
   bool wifiStateChanged = handleWiFi(_wifiMode);
 
@@ -177,7 +177,7 @@ void EspMQTTClient::loop(WiFiMode_t _wifiMode = WIFI_STA)
 }
 
 // Leave the possibility to select the WiFi mode
-bool EspMQTTClient::handleWiFi(WiFiMode_t _wifiMode = WIFI_STA)
+bool EspMQTTClient::handleWiFi(WiFiMode_t _wifiMode)
 {
   // When it's the first call, reset the wifi radio and schedule the wifi connection
   static bool firstLoopCall = true;
@@ -555,7 +555,7 @@ void EspMQTTClient::executeDelayed(const unsigned long delay, DelayedExecutionCa
 // ================== Private functions ====================-
 
 // Initiate a Wifi connection (non-blocking). Leave the posibility to select the WiFiMode
-void EspMQTTClient::connectToWifi(WiFiMode_t _wifiMode = WIFI_STA)
+void EspMQTTClient::connectToWifi(WiFiMode_t _wifiMode)
 {
   WiFi.mode(_wifiMode);
   #ifdef ESP32

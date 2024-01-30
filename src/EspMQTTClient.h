@@ -189,14 +189,14 @@ public:
   inline void setWifiReconnectionAttemptDelay(const unsigned int milliseconds) { _wifiReconnectionAttemptDelay = milliseconds; };
 
 private:
-  bool handleWiFi(WiFiMode_t _wifiMode = WIFI_STA);
+  bool handleWiFi(WiFiMode_t _wifiMode);
   bool handleMQTT();
   void onWiFiConnectionEstablished();
   void onWiFiConnectionLost();
   void onMQTTConnectionEstablished();
   void onMQTTConnectionLost();
 
-  void connectToWifi(WiFiMode_t _wifiMode = WIFI_STA);
+  void connectToWifi(WiFiMode_t _wifiMode);
   bool connectToMqttBroker();
   void processDelayedExecutionRequests();
   bool mqttTopicMatch(const String &topic1, const String &topic2);
